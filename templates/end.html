@@ -1,0 +1,12 @@
+{% extends "Base.html" %}
+{% block title %} Home Page {% endblock %}
+
+{% block content %}
+<p>The word was {{word}}</p>
+<form action="#" method='post'>
+    <p><input type="submit" value="Play Again?" /></p>
+</form>
+{% for key in players %}
+<p>{{key}} - Completed: {{values[key][0]}}    Time: {{values[key][1]}}</p>
+{% endfor %}
+{% endblock %}

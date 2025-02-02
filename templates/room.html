@@ -1,0 +1,10 @@
+{% extends "Base.html" %}
+{% block title %} Rooms {% endblock %}
+
+{% block content %}
+<h1>Your Room Code: {{room_code}}</h1>
+<h2>There are {{players}} players in your room</h2>
+<form action="#" method='post'>
+    <p><input type="submit" name="start" value="Start" /></p>
+</form>
+{% endblock %}

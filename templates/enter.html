@@ -1,0 +1,17 @@
+{% extends "Base.html" %}
+{% block title %} Entry Page {% endblock %}
+
+{% block content %}
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        {% for msg in messages %}
+            <p>{{msg}}</p>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+<form action="#" method='post'>
+    <p style="text-align: center;">Enter username</p>
+    <p style="text-align: center;"><input type="text" name="name" autofocus /></p>
+    <p style="text-align: center;"><input type="submit" name="button" value="Join Room" /></p>
+</form>
+{% endblock %}
