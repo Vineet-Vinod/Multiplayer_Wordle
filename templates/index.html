@@ -1,22 +1,71 @@
-{% extends "Base.html" %}
-{% block title %} Home Page {% endblock %}
+<!DOCTYPE html>
 
-{% block content %}
-{% with messages = get_flashed_messages() %}
-    {% if messages %}
-        {% for msg in messages %}
-            <p>{{msg}}</p>
-        {% endfor %}
-    {% endif %}
-{% endwith %}
+<html>
 
-<p>Current time: {{time}}</p>
-<form action="#" method='post'>
-    <p>Enter your guess</p>
-    <p><input type="text" name="guess" autofocus/></p>
-    <p><input type="submit" value="submit" /></p>
-</form>
-{% for item in values %}
-<p>{{item}}</p>
-{% endfor %}
-{% endblock %}
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>1v1 Wordle</title>
+</head>
+
+<body>
+    <h1 style="text-align: center;">1v1 Wordle</h1>
+    <hr>
+
+    <p id="username" style="display: none; font-weight: bold;"></p>
+    <p id="room_code" style="display: none; font-weight: bold; margin-bottom: 10px;"></p>
+
+    <!--Login-->
+    <div class="login" style="text-align: center;">
+        <p>ENTER USERNAME</p>
+        <p> <input type="text" id="login_text" /></p>
+        <p> <button type="button" id="login_button">LOGIN</button></p>
+    </div>
+
+    <!--Lobby-->
+    <div class="lobby" style="text-align: center;">
+        <div style="text-align: left;">
+            <input type="text" id="lobby_join_code"
+                style="display: block; margin-bottom: 10px; text-align: center; position: absolute; left: 9.5%; top: 36%"
+                placeholder="Enter Room Code" />
+            <button style="position: absolute; left: 10%; top: 43%" type="button" id="lobby_join">JOIN</button>
+            <button style="position: absolute; right: 10%; top: 43%" type="button" id="lobby_new">NEW LOBBY</button>
+        </div>
+
+    </div>
+
+    <!--Room-->
+    <div class="room" style="text-align: center;">
+        <p id="room_players" style="margin-top: 20px;"></p>
+        <button type="button" id="room_start_game">START GAME</button>
+    </div>
+
+    <!--Game-->
+    <div class="game">
+        <div style="text-align: center;">
+            <p id="game_time" style="margin-top: 20px;"></p>
+            <p> <input type="text" id="game_guess" /></p>
+            <p> <button type="button" id="game_submit">GUESS</button></p>
+        </div>
+        <div id="game_guesses" style="position: relative; width: 100%; text-align: center;">
+            <!-- Previous guesses space -->
+        </div>
+
+        <div id="game_keyboard">
+            <!-- Keyboard usage -->
+        </div>
+    </div>
+
+    <!--End-->
+    <div class="end" style="text-align: center;">
+        <p id="end_word" style="margin-top: 20px;"></p>
+        <button type="button" id="end_start_game">NEW GAME</button>
+        <div id="end_leaderboard" style="position: absolute; top: 40%; width: 100%; text-align: center;">
+            <!-- Leaderboard space -->
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+
+</html>
