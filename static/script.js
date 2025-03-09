@@ -52,13 +52,13 @@ function login_user() {
 
 function new_room() {
     let username = document.getElementById("username").textContent;
-    socket.emit("new_room", { "username": username });
+    socket.emit("new_room");
 }
 
 function join_room() {
     let username = document.getElementById("username").textContent;
     let room_code = document.getElementById("lobby_join_code").value;
-    socket.emit("join_room", { "username": username, "room_code": room_code });
+    socket.emit("join_room", { "room_code": room_code });
 }
 
 function start_game() {
@@ -72,7 +72,7 @@ function guess_word() {
     let room_code = document.getElementById("room_code").textContent;
     let guess = document.getElementById("game_guess").value;
     document.getElementById("game_guess").value = "";
-    socket.emit("game_guess", { "username": username, "room_code": room_code, "game_guess": guess });
+    socket.emit("game_guess", { "username": username, "room_code": room_code, "game_guess": guess, "time": curr_time });
 }
 
 let colors_array = ["grey", "orange", "green", "black"];
@@ -121,7 +121,7 @@ function print_leaderboard(leaderboard) {
 
     for (let i = 0; i < leaderboard.length; i++) {
         let line = document.createElement("p");
-        line.textContent = `${leaderboard[i][0]} - Completed: ${leaderboard[i][1]}   Guesses: ${leaderboard[i][2]}   Time: ${leaderboard[i][1]}`;
+        line.textContent = `${leaderboard[i][0]} - Completed: ${leaderboard[i][1]}   Guesses: ${leaderboard[i][2]}   Time: ${Math.floor(leaderboard[i][3] / 10)}.${leaderboard[i][3] % 10} seconds`;
         end_leaderboard.appendChild(line);
     }
 }
@@ -138,8 +138,9 @@ document.getElementById("end_start_game").addEventListener("click", start_game);
 
 // Stopwatch
 let stopwatch_ref = undefined;
+let curr_time = 0;
 function Stopwatch() {
-    let curr_time = 0;
+    curr_time = 0;
     stopwatch_ref = setInterval(() => {
         document.getElementById("game_time").textContent = `${Math.floor(curr_time / 10)}.${curr_time%10} seconds`;
         curr_time++;
@@ -148,10 +149,6 @@ function Stopwatch() {
 
 
 // Socket communications
-socket.on("connect", () => {
-    socket.emit("connected");
-});
-
 socket.on("login_valid_username", (login_json) => {
     turn_off_login();
     turn_on_lobby();
@@ -165,6 +162,7 @@ socket.on("invalid", (error_json) => {
 
 socket.on("room_valid", (room_json) => {
     turn_off_lobby();
+    turn_off_end();
     turn_on_room();
     document.getElementById("room_code").textContent = room_json.room_code;
     document.getElementById("room_code").style.display = "block";
@@ -196,10 +194,4 @@ socket.on("end_page", (end_json) => {
     turn_on_end();
     document.getElementById("end_word").textContent = "The correct word was " + end_json.correct_word;
     print_leaderboard(end_json.leaderboard);
-});
-
-socket.on("disconnect", () => {
-    let username = document.getElementById("username").textContent;
-    let room_code = document.getElementById("room_code").textContent;
-    socket.emit("disconnected", { "username": username, "room_code": room_code });
 });
