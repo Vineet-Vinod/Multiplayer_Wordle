@@ -6,7 +6,7 @@ class Room: # Room class
         self.word = None
         self.host = host
         self.players = {host: Player(host, host_id)}
-        self.game = Game("words.txt")
+        self.game = Game("src/words.txt")
         self.active = False
 
     def add_player(self, player_name, player_id):
