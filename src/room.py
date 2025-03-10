@@ -1,5 +1,5 @@
-from game import Game
-from player import Player
+from src.game import Game
+from src.player import Player
 
 class Room: # Room class
     def __init__(self, host, host_id):

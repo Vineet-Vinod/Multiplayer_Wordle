@@ -1,5 +1,5 @@
 from random import randint
-from room import Room
+from src.room import Room
 
 class Site:
     def __init__(self):
