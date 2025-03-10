@@ -51,12 +51,10 @@ function login_user() {
 }
 
 function new_room() {
-    let username = document.getElementById("username").textContent;
     socket.emit("new_room");
 }
 
 function join_room() {
-    let username = document.getElementById("username").textContent;
     let room_code = document.getElementById("lobby_join_code").value;
     socket.emit("join_room", { "room_code": room_code });
 }
@@ -148,7 +146,7 @@ function Stopwatch() {
 }
 
 
-// Socket communications
+// Websocket communications
 socket.on("login_valid_username", (login_json) => {
     turn_off_login();
     turn_on_lobby();
