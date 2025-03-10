@@ -106,25 +106,37 @@ class Server: # Singleton Class
         """
         Return if host is the host of room_code (only hosts can start a round)
         """
-        return self.active_rooms[room_code].host == host
+        try:
+            return self.active_rooms[room_code].host == host
+        except:
+            return False
     
     def is_room_active(self, room_code: str) -> bool:
         """
         Return if there is an active round in the room (players cannot join an active room)
         """
-        return self.active_rooms[room_code].active
+        try:
+            return self.active_rooms[room_code].active
+        except:
+            return True
     
     def num_players_in_room(self, room_code: str) -> int:
         """
         Return the number of players currently in room_code
         """
-        return self.active_rooms[room_code].num_players_in_room()
+        try:
+            return self.active_rooms[room_code].num_players_in_room()
+        except:
+            return 0
     
     def set_up_room(self, room_code: str) -> None:
         """
         Set up room_code for the next round
         """
-        self.active_rooms[room_code].set_up()
+        try:
+            self.active_rooms[room_code].set_up()
+        except:
+            pass
 
     def make_player_move(self, room_code: str, player_name: str, guess: str, time: str) -> bool:
         """
@@ -133,7 +145,10 @@ class Server: # Singleton Class
         Returns:
             bool indicating if the player has guessed the word/used up their 6 guesses (used to switch to end_page)
         """
-        return self.active_rooms[room_code].player_guess(player_name, guess, time)
+        try:
+            return self.active_rooms[room_code].player_guess(player_name, guess, time)
+        except:
+            return False
     
     def get_room_leaderboard(self, room_code: str) -> Tuple[List[str], List[Tuple[str, bool, int, float]]]:
         """
@@ -145,7 +160,10 @@ class Server: # Singleton Class
         """
         Returns player_name's guesses in the current round
         """
-        return self.active_rooms[room_code].get_player_guesses(player_name)
+        try:
+            return self.active_rooms[room_code].get_player_guesses(player_name)
+        except:
+            return ["ERR"]
     
     def get_player_keyboard(self, room_code: str, player_name: str) -> List[List[List[Union[str, int]]]]:
         """

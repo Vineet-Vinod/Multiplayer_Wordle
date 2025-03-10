@@ -51,8 +51,11 @@ class Room: # Room class
         Returns:
             bool indicating if the player has guessed the word/used up their 6 guesses (used to switch to end_page)
         """
-        res = self.game.run_guess(guess, self.word)
-        return self.players[player_name].update_after_guess(res, time)
+        if self.word:
+            res = self.game.run_guess(guess, self.word)
+            return self.players[player_name].update_after_guess(res, time)
+        else:
+            raise Exception
     
     def leaderboard(self) -> Tuple[List[str], List[Tuple[str, bool, int, float]]]:
         """
