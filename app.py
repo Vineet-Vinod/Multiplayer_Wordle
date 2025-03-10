@@ -1,3 +1,4 @@
+import socket
 from flask import Flask, render_template, request
 from flask_socketio import SocketIO, join_room, leave_room
 from src.website import Site
@@ -83,4 +84,6 @@ def disconnect():
 
 
 if __name__ == "__main__":
-    socketio.run(app, host="0.0.0.0")
+    print("Starting server...")
+    print(f"Play on: http://{socket.gethostbyname(socket.gethostname())}:5000")
+    socketio.run(app, host="0.0.0.0", port=5000)

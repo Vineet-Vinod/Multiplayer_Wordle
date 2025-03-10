@@ -1,3 +1,4 @@
+import os
 from src.game import Game
 from src.player import Player
 
@@ -6,7 +7,7 @@ class Room: # Room class
         self.word = None
         self.host = host
         self.players = {host: Player(host, host_id)}
-        self.game = Game("src/words.txt")
+        self.game = Game(os.path.join(os.path.dirname(__file__), "words.txt"))
         self.active = False
 
     def add_player(self, player_name, player_id):
