@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request
 from flask_socketio import SocketIO, join_room, leave_room
-from website import Site
+from src.website import Site
 
 
 app = Flask(__name__)
