@@ -12,7 +12,7 @@ class Room: # Room class
         self.host = host
         self.players = {host: Player(host, host_id)}
         self.game = Game(os.path.join(os.path.dirname(__file__), "words.txt"))
-        self.active = False
+        self.active = 0
 
     def add_player(self, player_name: str, player_id: str) -> None:
         """
@@ -24,6 +24,9 @@ class Room: # Room class
         """
         Remove the player from the current room (when they disconnect)
         """
+        if not self.players[player_name].done:
+            self.active -= 1
+            
         del self.players[player_name]
         if player_name == self.host:
             if self.num_players_in_room() != 0: # Not empty room - find another host
@@ -42,7 +45,7 @@ class Room: # Room class
         self.word = self.game.generate_game_word()
         for player in self.players.values():
             player.reset()
-        self.active = True
+        self.active = len(self.players)
 
     def player_guess(self, player_name: str, guess: str, time: str) -> bool:
         """
@@ -53,7 +56,10 @@ class Room: # Room class
         """
         if self.word:
             res = self.game.run_guess(guess, self.word)
-            return self.players[player_name].update_after_guess(res, time)
+            ret = self.players[player_name].update_after_guess(res, time)
+            if ret:
+                self.active -= 1
+            return ret
         else:
             raise Exception
     
