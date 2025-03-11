@@ -44,11 +44,12 @@ class Player:
         else:
             for c, col in result:
                 if (idx := "QWERTYUIOP".find(c)) != -1:
-                    self.keyboard[0][idx][1] = col
+                    self.keyboard[0][idx][1] = max(col, self.keyboard[0][idx][1])
                 elif (idx := "ASDFGHJKL".find(c)) != -1:
-                    self.keyboard[1][idx][1] = col
+                    self.keyboard[1][idx][1] = max(col, self.keyboard[1][idx][1])
                 else:
-                    self.keyboard[2]["ZXCVBNM".find(c)][1] = col
+                    idx = "ZXCVBNM".find(c)
+                    self.keyboard[2][idx][1] = max(col, self.keyboard[2][idx][1])
             
             self.guesses.append(result)
             if len(self.guesses) == 6:

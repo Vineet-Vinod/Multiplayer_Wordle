@@ -31,20 +31,20 @@ class Game: # Singleton Class
             A list of lists, where each inner list contains a character from the guessed word 
             and an integer code specifying its status
         """
-        ret = [[chr(ord(c)-32), 3] for c in guess] # Wrong letter (default)
+        ret = [[chr(ord(c)-32), 1] for c in guess] # Wrong letter (default)
         not_g = []
         not_w = []
 
         for i, c in enumerate(guess):
             if c == orig[i]:
-                ret[i][1] = 2 # Correct letter, right spot
+                ret[i][1] = 3 # Correct letter, right spot
             else:
                 not_g.append((c, i))
                 not_w.append(orig[i])
         
         for c, i in not_g:
             if c in not_w:
-                ret[i][1] = 1 # Correct letter, wrong spot
+                ret[i][1] = 2 # Correct letter, wrong spot
                 not_w.remove(c)
         
         return ret

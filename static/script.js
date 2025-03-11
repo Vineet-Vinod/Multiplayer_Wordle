@@ -73,7 +73,7 @@ function guess_word() {
     socket.emit("game_guess", { "username": username, "room_code": room_code, "game_guess": guess, "time": curr_time });
 }
 
-let colors_array = ["grey", "orange", "green", "black"];
+let colors_array = ["grey", "black", "orange", "green"];
 function print_guesses(list_of_guesses) {
     let game_guesses = document.getElementById("game_guesses");
     game_guesses.innerHTML = "";
