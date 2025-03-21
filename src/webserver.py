@@ -169,7 +169,10 @@ class Server: # Singleton Class
         """
         Returns player_name's keyboard (character usage)
         """
-        return self.active_rooms[room_code].get_player_keyboard(player_name)
+        try:
+            return self.active_rooms[room_code].get_player_keyboard(player_name)
+        except:
+            return ["ERR"]
     
     def get_room_word(self, room_code: str) -> str:
         """
