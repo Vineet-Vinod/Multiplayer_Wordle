@@ -83,7 +83,6 @@ class Room: # Room class
                 ret_ids.append(value.sid)
 
         ret_leaderboard.sort(key=lambda item: (not item[1], item[2], item[3]))
-        self.active = len(ret_leaderboard) != len(self.players)
         return ret_ids, ret_leaderboard
     
     def get_player_guesses(self, player_name: str) -> List[Union[List[List[Union[str, int]]], str]]:
