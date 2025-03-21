@@ -8,7 +8,6 @@ class Player:
         self.keyboard = None
         self.guesses = []
         self.time = 0
-        self.prev = 0
         self.completed = False
         self.done = False
         self.name = player_name
